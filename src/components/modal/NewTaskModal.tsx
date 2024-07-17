@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { addTask } from "../../store/tasksSlice";
 
+
 function NewTableModal({ toggleCreateTaskModal }: any) {
     // Store variables
     const categories = useSelector((state: RootState) => state.categories.categories);
@@ -13,7 +14,9 @@ function NewTableModal({ toggleCreateTaskModal }: any) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [tableID, setTableID] = useState(categories.find(item => item.id === currentCategory)?.tables[0].id);
-    const [subtasks, setSubtasks] = useState(Array<{id: string, value: string, done: boolean}>())
+    const [subtasks, setSubtasks] = useState(Array<{id: string, value: string, done: boolean}>());
+    const [requestedBy, setRequestedBy] = useState('');
+    const [timeToComplete, setTimeToComplete] = useState('');
 
     // Refs
     const subtaskName = useRef(null);
@@ -27,10 +30,12 @@ function NewTableModal({ toggleCreateTaskModal }: any) {
             tableID: tableID,
             name: name,
             description: description, 
-            subtasks: subtasks
-        } as Task));
-    }
-
+            subtasks: subtasks,
+            requestedBy: requestedBy,
+            timeToComplete: timeToComplete // Ensure timeToComplete is a number
+            // timeToComplete: Number(timeToComplete) // Ensure timeToComplete is a number
+        } as unknown as Task)); // Convert to unknown first to bypass type error
+    }    
     // Create new subtask
     const addSubtask = () => {
         if(subtaskName.current) {
@@ -85,6 +90,16 @@ function NewTableModal({ toggleCreateTaskModal }: any) {
                     {/* Task description */}
                     <div className="w-full">
                         <textarea rows={3} value={description} onChange={(e) => setDescription(e.target.value)} className='w-full bg-stone-200 p-2 rounded-xl placeholder-stone-400' placeholder="Description"></textarea>
+                    </div>
+
+                    {/* Requested by */}
+                    <div className="w-full">
+                        <input type="text" className='w-full bg-stone-200 p-2 rounded-xl placeholder-stone-400' placeholder='Requested by' value={requestedBy} onChange={(e) => setRequestedBy(e.target.value)} />
+                    </div>
+
+                    {/* Time to complete */}
+                    <div className="w-full">
+                        <input type="text" className='w-full bg-stone-200 p-2 rounded-xl placeholder-stone-400' placeholder='Time to complete' value={timeToComplete} onChange={(e) => setTimeToComplete(e.target.value)} />
                     </div>
 
                     {/* Subtasks */}

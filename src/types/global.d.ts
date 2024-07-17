@@ -4,7 +4,7 @@ declare global {
     type Category = {
         id: string,
         name: string,
-        tables: Array<{id: string, name:string, color:string}>,
+        tables: Array<{id: string, name: string, color: string}>,
     }
 
     type Task = {
@@ -14,5 +14,7 @@ declare global {
         name: string,
         description: string,
         subtasks: Array<{id: string, value: string, done: boolean}>,
+        requestedBy: string,
+        timeToComplete: string
     }
 }

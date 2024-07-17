@@ -15,10 +15,10 @@ function PageSection() {
     // Store variables
     const categories = useSelector((state: RootState) => state.categories.categories);
     const currentCategory = useSelector((state: RootState) => state.categories.currentCategory);
-    const tasks = useSelector((state: RootState) => state.tasks.tasks.filter(item => item.categoryID === currentCategory));
+    const tasks = useSelector((state: RootState) => state.tasks.tasks.filter((item: Task) => item.categoryID === currentCategory));
 
     // Current category
-    const category = categories.find(item => item.id === currentCategory) as Category;
+    const category = categories.find((item: Category) => item.id === currentCategory) as Category;
 
     // Toggle table creation modal
     const toggleCreateTableModal = () => {
@@ -35,7 +35,7 @@ function PageSection() {
         setTaskModal(val as any);
     }
     
-    if(currentCategory !== 'none') {
+    if (currentCategory !== 'none') {
         return (
             <div className="w-full h-full overflow-x-auto flex flex-col text-stone-700">
                 {/* Add new task button */}
@@ -57,8 +57,8 @@ function PageSection() {
                 {/* Main section */}
                 <div className="w-full h-full py-4 flex flex-col md:flex-row md:divide-x">
                     {/* Category tables */}
-                    {category.tables.map(table => {
-                        return <TasksTable table={table} key={table.id} toogleTaskModal={toogleTaskModal} tasks={tasks.filter(item => item.tableID === table.id && item.categoryID === currentCategory)}></TasksTable>
+                    {category.tables.map((table) => {
+                        return <TasksTable table={table} key={table.id} toogleTaskModal={toogleTaskModal} tasks={tasks.filter((item: Task) => item.tableID === table.id && item.categoryID === currentCategory)}></TasksTable>
                     })}
     
                     {/* Create new table button */}
